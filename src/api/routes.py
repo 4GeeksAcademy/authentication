@@ -25,8 +25,12 @@ def user_sign_up():
     new_user_data = request.get_json()
     # name = new_user_data["name"]
     email = new_user_data["email"]
-    
+    #makes it so that password is unique
+    #hashlib is a function that returns an integer value,reads passwords with number
+    #sha its encrypted &hex digest
+    #the sha 256 is the salt to add
     hashed_password = hashlib.sha256(new_user_data ["password"].encode("utf-8") ).hexdigest() #figure out this line
+    #adding a salt:
     hasemail = User.query.filter_by(email = email).first()
     if hasemail is None:
         new_user = User( email=email, password=hashed_password,is_active = True)
